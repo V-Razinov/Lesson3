@@ -1,43 +1,65 @@
 package com.example.lesson3.data.models
 
+import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class WeatherSuccessResponse(
-    val id: Int,
-    val coord: Coord,
-    val weather: List<Weather>,
-    val main: Main,
-    val visibility: Int,
-    val wind: Wind,
-    val clouds: Clouds,
+    val lat: Double,
+    val lng: Double,
+    val timezoneOffset: Int,
+    val daily: List<Daily>
 ) {
-    data class Coord(
-        val lon: Double,
-        val lat: Double
+    data class Daily(
+        @SerializedName("dt")
+        val dateUnix: Int,//Дата в формате Unix
+        @SerializedName("temp")
+        val temperature: Temp,
+        @SerializedName("feels_like")
+        val feelsLike: FeelsLike,
+        val weather: List<Weather>,
+        val pressure: Int,
+        val humidity: Int,
+        @SerializedName("wind_speed")
+        val windSpeed: Double,
+        val clouds: Int,
+        val snow: Double?,
+    ) {
+        val dateFormatted
+            get() = Calendar.getInstance().run {
+                timeInMillis = dateUnix * 1000L
+                SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                    .format(time)
+                    .toString()
+            }
+    }
+
+    data class Temp(
+        val min: Double,
+        val max: Double,
+
+        @SerializedName("morn")
+        val morning: Double,
+        val day: Double,
+        @SerializedName("eve")
+        val evening: Double,
+        val night: Double,
+    )
+
+    data class FeelsLike(
+        val day: Double,
+        @SerializedName("morn")
+        val morning: Double,
+        @SerializedName("eve")
+        val evening: Double,
+        val night: Double,
     )
 
     data class Weather(
         val id: Int,
         val main: String,
         val description: String,
-        val icon: String
-    )
-
-    data class Main(
-        val temp: Double,
-        val feels_like: Double,
-        val temp_min: Double,
-        val temp_max: Double,
-        val pressure: Int,
-        val humidity: Int,
-    )
-
-    data class Wind(
-        val speed: Double,
-        val deg: Int,
-        val gust: Double,
-    )
-
-    data class Clouds(
-        val all: Int,
+        val icon: String,
     )
 }
 

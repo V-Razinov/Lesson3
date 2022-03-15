@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lesson3.App
 import com.example.lesson3.data.models.WeatherSuccessResponse
 import com.example.lesson3.data.net.retrofit.RetrofitService
 import com.example.lesson3.databinding.ActivityMainBinding
@@ -36,33 +37,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
 
-    private val adapter by lazy { WeatherAdapter() }
-
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, defaultViewModelProviderFactory)[MainViewModel::class.java]
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rv.adapter = adapter
-        binding.rv.layoutManager = LinearLayoutManager(binding.root.context)
-
-        binding.city.doOnEditorAction(EditorInfo.IME_ACTION_DONE) { editText ->
-            val city = editText.text?.toString() ?: ""
-            if (city.isNotBlank())
-                viewModel.loadWeather(city)
-        }
-
-        observeViewModel()
+        viewModel = ViewModelProvider(
+            owner = this,
+            factory = defaultViewModelProviderFactory
+        )[MainViewModel::class.java]
+        viewModel.initRouter(
+            fm = supportFragmentManager,
+            containerId = binding.fragmentContainer.id,
+            finish = ::finish
+        )
+        viewModel.startWeatherScreen()
     }
 
-    private fun observeViewModel() = with(viewModel) {
-        weatherItems.observe(this@MainActivity) { adapter.submitList(it) }
-        isLoading.observe(this@MainActivity) { binding.loader.isVisible = it }
-        message.observe(this@MainActivity) {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
-        }
+    override fun onBackPressed() {
+        viewModel.onBackPressed()
     }
 }

@@ -10,6 +10,11 @@
         <entry key="..\:/Users/79020/AndroidStudioProjects/Lesson3/app/src/main/res/layout/item_temperature.xml" value="0.55" />
         <entry key="..\:/Users/79020/AndroidStudioProjects/Lesson3/app/src/main/res/layout/item_weather.xml" value="0.55" />
         <entry key="..\:/Users/79020/AndroidStudioProjects/Lesson3/app/src/main/res/layout/item_wind.xml" value="0.412962962962963" />
+        <entry key="..\:/programms/androidstudioprojects/Lesson3/app/src/main/res/drawable/ic_weather_placeholder.xml" value="0.1875" />
+        <entry key="..\:/programms/androidstudioprojects/Lesson3/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/programms/androidstudioprojects/Lesson3/app/src/main/res/layout/fragment_weather.xml" value="0.25416666666666665" />
+        <entry key="..\:/programms/androidstudioprojects/Lesson3/app/src/main/res/layout/item_clouds.xml" value="0.25416666666666665" />
+        <entry key="..\:/programms/androidstudioprojects/Lesson3/app/src/main/res/layout/item_weather.xml" value="0.6" />
       </map>
     </option>
   </component>
